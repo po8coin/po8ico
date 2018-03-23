@@ -3,7 +3,7 @@ var po8Token = artifacts.require("./PO8/tokens/PO8Token.sol");
 contract('PO8Token', function(accounts) {
 
     var po8Instance;
-    var allTokens = new web3.BigNumber('1000000000000000000000000000');
+    var allTokens = new web3.BigNumber('10000000000000000000000000000');
     var onePO8 = new web3.BigNumber('1000000000000000000');
 
     it("Get contract instance", function(){

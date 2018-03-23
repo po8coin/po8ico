@@ -22,7 +22,4 @@ contract PO8Token is StandardToken, MintableToken {
         Transfer(0x0, owner, INITIAL_SUPPLY);
     }
 
-
-
-
 }

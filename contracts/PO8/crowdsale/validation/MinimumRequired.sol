@@ -3,7 +3,8 @@ pragma solidity ^0.4.18;
 import "../../zlib/crowdsale/Crowdsale.sol";
 import "../../zlib/ownership/Ownable.sol";
 
-contract MinimumRequired is Crowdsale, Ownable{
+contract MinimumRequired is Crowdsale, Ownable
+{
 
     uint256 minInvestmentWei =  0;//allow any default
 
