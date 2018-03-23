@@ -52,9 +52,9 @@ contract('PO8Token', function(accounts) {
     it("Cannot claim tokens without approval.", function(){
         po8Instance.constructor.defaults({from: accounts[1]});
         return po8Instance.transferFrom(accounts[0], accounts[1], onePO8).then(function (result) {
-            assert(true, false, " WOA, this should not have been happened, someone transfered funds without approval.");
+            assert.equal(true, false, " WOA, this should not have been happened, someone transfered funds without approval.");
         }).catch(function (error) {
-            assert(true, true, "..." + error.toString());
+            assert.equal(true, true, "..." + error.toString());
         });
         po8Instance.constructor.defaults({from: accounts[0]});
     });

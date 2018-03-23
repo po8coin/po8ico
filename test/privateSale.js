@@ -6,7 +6,8 @@ import ether from './helpers/ether';
 import {duration} from './helpers/increaseTime';
 import latestTime from './helpers/latestTime';
 
-
+const {promisify} = require('util');
+const sleep = promisify(setTimeout);
 
 contract('PrivateSale', function(accounts) {
 
@@ -16,8 +17,9 @@ contract('PrivateSale', function(accounts) {
     var onePO8 = new web3.BigNumber('1000000000000000000');
 
     let timeout = 3;
+    let timeoutMs = timeout * 1000;
     let open = latestTime() + timeout;
-    let close = open + (duration.days(30));
+    let close = open + (duration.seconds(30));
     let cap = ether(300);
     let rate = new web3.BigNumber(10);
     let bonusRate = new web3.BigNumber(0.5);
@@ -77,48 +79,55 @@ contract('PrivateSale', function(accounts) {
         );
     });
 
-    it("whitelist address CAN buy tokens", async()=>{
+    var resultPurchase;
+    it("whitelist address CAN buy tokens",  (done)=>{
 
-        return await privateSaleInstance.buyTokens
-        (
-            accounts[1],
+
+         var callbackPurchase = async () => {
+             console.log('starting buy transaction');
+             resultPurchase = await privateSaleInstance.buyTokens
+             (
+                 accounts[1],
+                 {
+                     from: accounts[1],
+                     value: ether(2),
+                     gas: 500000000
+                 }
+             );
+             done();
+         };
+
+         setTimeout(callbackPurchase, timeoutMs);
+
+
+
+
+        //assert.equal(true, false, 'failing on purpose');
+    }).timeout(timeoutMs + 50000);
+
+    it("event purchase triggered", () =>{
+        assert.web3Event( resultPurchase,
             {
-                from: accounts[1],
-                value: ether(5),
-                gas: 500000000
+                event:'TokenPurchase',
+                "args": {
+                    "amount": ether(2).toNumber() * rate.toNumber(),
+                    "beneficiary": accounts[1],
+                    "purchaser": accounts[1],
+                    "value": ether(2).toNumber()
+                }
             }
         );
     });
 
-
-   /*it("Allows buying tokens", async()=>{
-        let buyToken1 =  await privateSaleInstance
-        .buyTokens
-        (
-            accounts[1],
-            {
-                from: accounts[1],
-                value: ether(1),
-                gas: 500000000
-            }
-        );
+    it("user balance is 0", async()=>{
 
 
-        expect.web3Event(buyToken1,
-            {
-                event: 'TokenPurchase',
-                args:{
-                    "amount": 100000000000000000000,
-                    "beneficiary": "0xf17f52151ebef6c7334fad080c5704d77216b732",
-                    "purchaser": "0xf17f52151ebef6c7334fad080c5704d77216b732",
-                    "value": 10000000000000000000
-                }
-            },
-            "token purchase success"
-        );
+        let balance = await po8Instance.balanceOf(accounts[1]);
 
-        return buyToken1;
-    });*/
+        assert.equal(balance.toString(), '0', 'balance is incorrect');
+
+
+    });
 
 
 
