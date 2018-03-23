@@ -119,15 +119,41 @@ contract('PrivateSale', function(accounts) {
         );
     });
 
+    var startingBalance;
     it("user balance is 0", async()=>{
 
 
-        let balance = await po8Instance.balanceOf(accounts[1]);
+        startingBalance = await po8Instance.balanceOf(accounts[1]);
 
-        assert.equal(balance.toString(), '0', 'balance is incorrect');
+        assert.equal(startingBalance.toString(), '0', 'balance is incorrect');
 
 
     });
+
+    var resultWthdraw;
+    it("can withdraw tokens after sale is done", (done)=>{
+        var callbackWithdraw = async()=>{
+            console.log("trigger withdraw of tokens after sale is over");
+            resultWthdraw = await privateSaleInstance.withdrawTokens({
+                from: accounts[1],
+                gas: 500000000
+            });
+            let balance = await po8Instance.balanceOf(accounts[1]);
+            assert.equal(balance, ether(2).toNumber() * rate.toNumber(), "balance is incorrect");
+            /*assert.web3Event(resultWthdraw,{
+                event:'Transfer',
+                args:{
+                    from: accounts[0],
+                    to: accounts[1] + 'aaa',
+                    value: ether(2).toNumber() * rate.toNumber()
+                }
+            });*/
+            done();
+        };
+
+        setTimeout(callbackWithdraw, 30000);
+
+    }).timeout(timeoutMs + 30000);
 
 
 
