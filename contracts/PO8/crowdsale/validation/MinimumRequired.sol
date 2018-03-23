@@ -20,7 +20,7 @@ contract MinimumRequired is Crowdsale, Ownable
     /**
     *API to set mininum investment only owner of contract
     */
-    function setMinInvestment(uint256 _minWei) onlyOwner external {
+    function setMinInvestment(uint256 _minWei)  external onlyOwner {
         minInvestmentWei = _minWei;
     }
 

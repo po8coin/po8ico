@@ -18,9 +18,12 @@ contract('PrivateSale', function(accounts) {
     let timeout = 3;
     let open = latestTime() + timeout;
     let close = open + (duration.days(30));
-    let cap = ether(3);
+    let cap = ether(300);
     let rate = new web3.BigNumber(10);
+    let bonusRate = new web3.BigNumber(0.5);
+    let minWei = ether(1);
     let wallet = accounts[0];
+
 
 
     it('set up token contract', async()=>{
@@ -41,6 +44,8 @@ contract('PrivateSale', function(accounts) {
             close,
             cap,
             rate,
+            bonusRate,
+            minWei,
             wallet,
             po8Instance.address,
             accounts[0],
@@ -74,18 +79,15 @@ contract('PrivateSale', function(accounts) {
 
     it("whitelist address CAN buy tokens", async()=>{
 
-        setTimeout(async()=>{
-            return await privateSaleInstance.buyTokens
-            (
-                accounts[1],
-                {
-                    from: accounts[1],
-                    value: ether(5),
-                    gas: 500000000
-                }
-            );
-        }, timeout * 1000);
-
+        return await privateSaleInstance.buyTokens
+        (
+            accounts[1],
+            {
+                from: accounts[1],
+                value: ether(5),
+                gas: 500000000
+            }
+        );
     });
 
 
