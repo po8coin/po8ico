@@ -2,12 +2,11 @@ pragma solidity ^0.4.18;
 
 import "../zlib/token/ERC20/ERC20.sol";
 import "../zlib/crowdsale/Crowdsale.sol";
-import "../zlib/crowdsale/distribution/PostDeliveryCrowdsale.sol";
-import "../zlib/crowdsale/distribution/FinalizableCrowdsale.sol";
 import "../zlib/crowdsale/validation/WhitelistedCrowdsale.sol";
 import "../zlib/crowdsale/validation/CappedCrowdsale.sol";
 import "../zlib/crowdsale/emission/AllowanceCrowdsale.sol";
 import "../zlib/crowdsale/validation/TimedCrowdsale.sol";
+import "./distribution/PostFinalizableDeliveryCrowdsale.sol";
 import "./validation/MinimumRequired.sol";
 import "./bonuses/BonusRateCrowdsale.sol";
 
@@ -15,7 +14,7 @@ contract PrivateSale is
         AllowanceCrowdsale,
         CappedCrowdsale,
         WhitelistedCrowdsale,
-        PostDeliveryCrowdsale,
+        PostFinalizableDeliveryCrowdsale,
         MinimumRequired,
         BonusRateCrowdsale
 {

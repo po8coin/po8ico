@@ -133,6 +133,10 @@ contract('PrivateSale', function(accounts) {
     var resultWthdraw;
     it("can withdraw tokens after sale is done", (done)=>{
         var callbackWithdraw = async()=>{
+
+            console.log('finalize private sale');
+            await privateSaleInstance.finalize({from:accounts[0], gas: 500000000 });
+
             console.log("trigger withdraw of tokens after sale is over");
             resultWthdraw = await privateSaleInstance.withdrawTokens({
                 from: accounts[1],
@@ -140,6 +144,8 @@ contract('PrivateSale', function(accounts) {
             });
             let balance = await po8Instance.balanceOf(accounts[1]);
             assert.equal(balance, ether(2).toNumber() * rate.toNumber(), "balance is incorrect");
+
+
             /*assert.web3Event(resultWthdraw,{
                 event:'Transfer',
                 args:{
