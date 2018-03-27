@@ -21,7 +21,7 @@ contract('PrivateSale', function(accounts) {
     let open = latestTime() + timeout;
     let close = open + (duration.seconds(30));
     let cap = ether(300);
-    let rate = new web3.BigNumber(10);
+    let rate = new web3.BigNumber(5);
     let bonusRate = new web3.BigNumber(0.5);
     let minWei = ether(1);
     let wallet = accounts[0];
