@@ -8,6 +8,10 @@ module.exports = function(deployer, network, accounts) {
         /*save token address for private sale migration*/
         if(meta.po8Token) {
             meta.po8Token.address = PO8Token.address;
+        } else {
+            meta.po8Token = {
+                address: PO8Token.address
+            };
         }
         file.saveMeta(meta);
     });

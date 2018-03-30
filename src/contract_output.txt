@@ -190,7 +190,7 @@ AL_SUPPLY;\r\n        balances[owner] = INITIAL_SUPPLY;\r\n    }\r\n\r\n\r\n\r\n
      addProp: [Function: bound addProp],
      toJSON: [Function: bound toJSON],
      web3:
-      Web3 {
+      GetWeb3 {
         _requestManager: [Object],
         currentProvider: [Object],
         eth: [Object],
