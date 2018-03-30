@@ -3,5 +3,5 @@ build/
 .idea/
 package-lock.json
 yarn.lock
-migrations/config
+migrations/config/config.json
 migrations/meta
