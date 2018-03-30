@@ -4,4 +4,4 @@ build/
 package-lock.json
 yarn.lock
 migrations/config/config.json
-migrations/meta
+migrations/meta/meta.json
