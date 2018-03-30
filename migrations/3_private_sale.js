@@ -1,6 +1,5 @@
 var PrivateSale = artifacts.require("./PO8/crowdsale/PrivateSale.sol");
 var meta = require('../migrations/meta/meta');
-var Web3 = require('web3');
 
 module.exports = function(deployer, network, accounts) {
 
@@ -15,10 +14,10 @@ module.exports = function(deployer, network, accounts) {
         privateSale: {
             open: openTime,
             close: openTime + 30, //will end 30 sec later
-            cap: '500000000000000000000', //max ether allowed to receive
+            cap: '500000000000000000000', //max ether allowed to receive 500
             rate: 5, // ether to token ratio
             bonusRate: 0.5, //bonus rate percentage 50%
-            minWei: '1000000000000000000', //minimum investment
+            minWei: '1000000000000000000', //minimum investment 1 ether
             walletEth: accounts[0],
             token: meta.po8Token.address,
             walletToken: accounts[0],
@@ -43,6 +42,7 @@ module.exports = function(deployer, network, accounts) {
         config.privateSale.walletToken,
         config.privateSale.tx_options
     ).then(function(){
+        //set up token allowance
 
     });
 };
