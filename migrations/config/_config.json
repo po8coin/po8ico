@@ -2,11 +2,11 @@
   "privateSale": {
       "config": {
         "open": 0,
-        "close": 30, //will end 30 sec later
-        "cap": "500000000000000000000", //max ether allowed to receive 500
-        "rate": 5, // ether to token ratio
-        "bonusRate": 0.5, //bonus rate percentage 50%
-        "minWei": "1000000000000000000", //minimum investment 1 ether
+        "close": 30,
+        "cap": "500000000000000000000",
+        "rate": 5,
+        "bonusRate": 0.5,
+        "minWei": "1000000000000000000",
         "walletEth": "",
         "token": "",
         "walletToken": "",
