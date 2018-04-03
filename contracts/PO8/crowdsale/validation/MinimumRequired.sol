@@ -6,7 +6,7 @@ import "../../zlib/ownership/Ownable.sol";
 contract MinimumRequired is Crowdsale, Ownable
 {
 
-    uint256 minInvestmentWei =  0;//allow any default
+    uint256 minInvestmentWei =  1;//allow any default
 
     function MinimumRequired(uint256 _minWei) public {
         minInvestmentWei = _minWei;

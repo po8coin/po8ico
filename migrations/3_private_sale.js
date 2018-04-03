@@ -18,6 +18,7 @@ module.exports = function(deployer, network, accounts) {
         address: meta.po8Token.address
     };
     config.cap = currency.ether(13500);//aprox $9.6m
+    config.rate = 5;
     config.minWei = currency.ether(250);//aprox $176K
     config.bonusRate = 0.5;
     config.walletEth = accounts[0];
@@ -25,14 +26,6 @@ module.exports = function(deployer, network, accounts) {
     config.tx_options.from = accounts[0];
     config.tx_options.gas = 500000000;
 
-
-
-
-    //updating meta
-    meta.privateSale = {
-        config: config
-    };
-    file.saveMeta(meta);
 
 
     deployer.deploy(
@@ -49,6 +42,17 @@ module.exports = function(deployer, network, accounts) {
         config.tx_options
     ).then(function(){
         //post deployment set up
-
+        //updating meta
+        meta.privateSale = {
+            config: config,
+            address: PrivateSaleContract.address
+        };
+        file.saveMeta(meta);
+    }).catch(function() {
+        meta.privateSale = {
+            config: config,
+            address: PrivateSaleContract.address ? PrivateSaleContract.address : ''
+        };
+        file.saveMeta(meta);
     });
 };

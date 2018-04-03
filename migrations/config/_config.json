@@ -1,19 +1,19 @@
 {
   "privateSale": {
-      "config": {
-        "open": 0,
-        "close": 30,
-        "cap": "500000000000000000000",
-        "rate": 5,
-        "bonusRate": 0.5,
-        "minWei": "1000000000000000000",
-        "walletEth": "",
-        "token": "",
-        "walletToken": "",
-        "tx_options": {
-          "from": "",
-          "gas": 500000000
-        }
+    "config": {
+      "open": null,
+      "close": null,
+      "cap": null,
+      "rate": null,
+      "bonusRate": null,
+      "minWei": null,
+      "walletEth": null,
+      "token": null,
+      "walletToken": null,
+      "tx_options": {
+        "from": null,
+        "gas": null
       }
+    }
   }
 }

@@ -9,6 +9,7 @@ import "../zlib/crowdsale/validation/TimedCrowdsale.sol";
 import "./distribution/PostFinalizableDeliveryCrowdsale.sol";
 import "./validation/MinimumRequired.sol";
 import "./bonuses/BonusRateCrowdsale.sol";
+import "./payout/PayoutRateFluctuation.sol";
 
 contract PrivateSale is
         AllowanceCrowdsale,
@@ -16,7 +17,8 @@ contract PrivateSale is
         WhitelistedCrowdsale,
         PostFinalizableDeliveryCrowdsale,
         MinimumRequired,
-        BonusRateCrowdsale
+        BonusRateCrowdsale,
+        PayoutRateFluctuation
 {
     //constructor
     function PrivateSale(
@@ -38,8 +40,6 @@ contract PrivateSale is
         BonusRateCrowdsale (_bonus_rate)
     {
 
-        Deployed(1);
     }
 
-    event Deployed(int x);
 }
