@@ -81,8 +81,6 @@ contract('PrivateSale', function(accounts) {
 
     var resultPurchase;
     it("whitelist address CAN buy tokens",  (done)=>{
-
-
          var callbackPurchase = async () => {
              console.log('starting buy transaction');
              resultPurchase = await privateSaleInstance.buyTokens
@@ -96,16 +94,11 @@ contract('PrivateSale', function(accounts) {
              );
              done();
          };
-
          setTimeout(callbackPurchase, timeoutMs);
-
-
-
-
         //assert.equal(true, false, 'failing on purpose');
     }).timeout(timeoutMs + 50000);
 
-    it("event purchase triggered", () =>{
+    it("event purchase 1 correct amount", () =>{
         assert.web3Event( resultPurchase,
             {
                 event:'TokenPurchase',
@@ -119,15 +112,48 @@ contract('PrivateSale', function(accounts) {
         );
     });
 
+    it("change payout rate", async () => {
+        await  privateSaleInstance.setPayoutRate(8, {
+            from: accounts[0],
+            gas: 500000000
+        });
+    });
+
+    it("make second purchase to new rate",  (done)=>{
+        var callbackPurchase = async () => {
+            console.log('starting buy transaction');
+            resultPurchase = await privateSaleInstance.buyTokens
+            (
+                accounts[1],
+                {
+                    from: accounts[1],
+                    value: ether(2),
+                    gas: 500000000
+                }
+            );
+            done();
+        };
+        setTimeout(callbackPurchase, timeoutMs);
+    }).timeout(timeoutMs + 50000);
+
+    it("event purchase 2 correct amount", () =>{
+        assert.web3Event( resultPurchase,
+            {
+                event:'TokenPurchase',
+                "args": {
+                    "amount": ether(2).toNumber() * 8,
+                    "beneficiary": accounts[1],
+                    "purchaser": accounts[1],
+                    "value": ether(2).toNumber()
+                }
+            }
+        );
+    });
+
     var startingBalance;
     it("user balance is 0", async()=>{
-
-
         startingBalance = await po8Instance.balanceOf(accounts[1]);
-
         assert.equal(startingBalance.toString(), '0', 'balance is incorrect');
-
-
     });
 
     var resultWthdraw;
@@ -143,25 +169,12 @@ contract('PrivateSale', function(accounts) {
                 gas: 500000000
             });
             let balance = await po8Instance.balanceOf(accounts[1]);
-            assert.equal(balance, ether(2).toNumber() * rate.toNumber(), "balance is incorrect");
-
-
-            /*assert.web3Event(resultWthdraw,{
-                event:'Transfer',
-                args:{
-                    from: accounts[0],
-                    to: accounts[1] + 'aaa',
-                    value: ether(2).toNumber() * rate.toNumber()
-                }
-            });*/
+            assert.equal(balance, (ether(2).toNumber() * rate.toNumber()) + (ether(2).toNumber() * 8), "balance is incorrect");
             done();
         };
 
-        setTimeout(callbackWithdraw, 30000);
+        setTimeout(callbackWithdraw, 50000);
 
-    }).timeout(timeoutMs + 30000);
-
-
-
+    }).timeout(timeoutMs + 50000);
 
 });
