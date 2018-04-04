@@ -1,18 +1,18 @@
 {
   "po8Token": {
-    "address": "0x345ca3e014aaf5dca488057592ee47305d9b3e10"
+    "address": "0x90fbc44fc6f93b773d0111b830bb27cd42292c9f"
   },
   "privateSale": {
     "config": {
-      "open": 1522816500392,
-      "close": 1522819092389,
+      "open": 1522819457890,
+      "close": 1522822049887,
       "cap": "13500000000000000",
       "rate": 5,
       "bonusRate": 0.5,
       "minWei": "250000000000000",
       "walletEth": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
       "token": {
-        "address": "0x345ca3e014aaf5dca488057592ee47305d9b3e10"
+        "address": "0x90fbc44fc6f93b773d0111b830bb27cd42292c9f"
       },
       "walletToken": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
       "tx_options": {
@@ -20,6 +20,6 @@
         "gas": 500000000
       }
     },
-    "address": "0xf25186b5081ff5ce73482ad761db0eb0d25abfbf"
+    "address": "0x17647ef21c6fd7e67486c57affbb1faf9eb30ea5"
   }
 }

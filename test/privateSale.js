@@ -192,13 +192,17 @@ contract('PrivateSale', function(accounts) {
 
 
     it("set percentage to withdraw to 20", async()=>{
-        let percentageTx = await privateSaleInstance.setAllowedPercent(20, {
-            from: accounts[0],
-            gas: 500000000
-        });
+        await privateSaleInstance.setAllowedPercent(
+            20,
+            {
+                from: accounts[0],
+                gas: 500000000
+            }
+        );
     });
 
     var resultWthdraw;
+    var shouldbe1Percent = ((ether(2).toNumber() * rate.toNumber()) + (ether(2).toNumber() * 8)) / 100;
     it("can withdraw 20% tokens after sale is done and finalized", (done)=>{
         var callbackWithdraw = async()=>{
 
@@ -211,7 +215,7 @@ contract('PrivateSale', function(accounts) {
                 gas: 500000000
             });
             let balance = await po8Instance.balanceOf(accounts[1]);
-            let shouldbe = (((ether(2).toNumber() * rate.toNumber()) + (ether(2).toNumber() * 8)) / 100) * 20;
+            let shouldbe = shouldbe1Percent * 20;
             assert.equal(balance.toNumber(), shouldbe, "balance is incorrect");
             done();
         };
@@ -219,5 +223,80 @@ contract('PrivateSale', function(accounts) {
         setTimeout(callbackWithdraw, 30000);
 
     }).timeout(timeoutMs + 50000);
+
+    it("set percentage to withdraw to 40", async()=>{
+        await privateSaleInstance.setAllowedPercent(
+            40,
+            {
+                from: accounts[0],
+                gas: 500000000
+            }
+        );
+    });
+
+    it("can withdraw another 20%", async()=>{
+        resultWthdraw = await privateSaleInstance.withdrawTokens({
+            from: accounts[1],
+            gas: 500000000
+        });
+        let balance = await po8Instance.balanceOf(accounts[1]);
+        let shouldbe = shouldbe1Percent * 40;
+        assert.equal(balance.toNumber(), shouldbe, "balance is incorrect");
+    });
+
+    it("set percentage to withdraw to 100", async()=>{
+        await privateSaleInstance.setAllowedPercent(
+            100, {
+                from: accounts[0],
+                gas: 500000000
+            }
+        );
+    });
+
+    it("can withdraw the remaining 60%", async()=>{
+        resultWthdraw = await privateSaleInstance.withdrawTokens({
+            from: accounts[1],
+            gas: 500000000
+        });
+        let balance = await po8Instance.balanceOf(accounts[1]);
+        let shouldbe = shouldbe1Percent * 100;
+        assert.equal(balance.toNumber(), shouldbe, "balance is incorrect");
+    });
+
+    it("cannot withdraw more funds", async()=> {
+        let error = false;
+        let balance;
+        try{
+            resultWthdraw = await privateSaleInstance.withdrawTokens({
+                 from: accounts[1],
+                gas: 500000000
+            });
+            balance = await po8Instance.balanceOf(accounts[1]);
+            error = true;
+        } catch (e) {
+            error = false;
+        }
+        if(error) {
+            assert.equal(true, false, "Error: the user should bot be able to withdraw more, new balance "+balance.toNumber());
+        } else {
+            assert.equal(true, true, "yey!");
+        }
+
+    });
+
+    it("can show me the balance", (done)=>{
+
+        var checkBalanceDelayed = async function() {
+            let balance = await po8Instance.balanceOf(accounts[1]);
+            console.log("final balance is = " + balance.toNumber());
+            done();
+        };
+
+        setTimeout(checkBalanceDelayed, 5000);
+
+
+    }).timeout(10000);
+
+
 
 });
