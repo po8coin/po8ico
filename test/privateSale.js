@@ -277,14 +277,14 @@ contract('PrivateSale', function(accounts) {
             error = false;
         }
         if(error) {
-            assert.equal(true, false, "Error: the user should bot be able to withdraw more, new balance "+balance.toNumber());
+            assert.equal(true, false, "Error: the user should not be able to withdraw more, new balance "+balance.toNumber());
         } else {
             assert.equal(true, true, "yey!");
         }
 
     });
 
-    it("can show me the balance", (done)=>{
+    it("wait 5 seconds to request balance", (done)=>{
 
         var checkBalanceDelayed = async function() {
             let balance = await po8Instance.balanceOf(accounts[1]);

@@ -38,16 +38,18 @@ contract ReleasablePercentage is Ownable, PostDeliveryCrowdsale, FinalizableCrow
     function withdrawTokens() public {
         require(hasClosed());
         require(isFinalized);
-        uint256 balanceAmount = balances[msg.sender];
-        require(balanceAmount > 0);
+
+        uint256 balanceLeft = balances[msg.sender];
         uint256 withdrawn = withdrawnBalance[msg.sender];
-        uint256 totalTokens = balanceAmount + withdrawn;
+        uint256 totalTokens = balanceLeft + withdrawn;
         uint256 totalAllowance = (totalTokens / 100) * allowedPercent;
         uint256 allowedAmount = totalAllowance - withdrawn;
+
+        require(balanceLeft > 0);
         require(allowedAmount > 0);
-        require(allowedAmount <= balanceAmount);
-        withdrawnBalance[msg.sender] = withdrawn + allowedAmount;
-        balances[msg.sender] = balanceAmount - totalAllowance;
+        require(allowedAmount <= balanceLeft);
+        withdrawnBalance[msg.sender] = allowedAmount + withdrawn;
+        balances[msg.sender] = balanceLeft - allowedAmount;
         _deliverTokens(msg.sender, allowedAmount);
     }
 }
