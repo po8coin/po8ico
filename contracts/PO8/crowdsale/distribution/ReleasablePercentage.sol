@@ -1,10 +1,11 @@
 pragma solidity ^0.4.18;
 
-import "./PostFinalizableDeliveryCrowdsale.sol";
+import "../../zlib/crowdsale/distribution/PostDeliveryCrowdsale.sol";
+import "../../zlib/crowdsale/distribution/FinalizableCrowdsale.sol";
 import "../../zlib/ownership/Ownable.sol";
 import "../../zlib/math/SafeMath.sol";
 
-contract ReleasablePercentage is PostFinalizableDeliveryCrowdsale, Ownable {
+contract ReleasablePercentage is Ownable, PostDeliveryCrowdsale, FinalizableCrowdsale {
 
     using SafeMath for uint256;
 

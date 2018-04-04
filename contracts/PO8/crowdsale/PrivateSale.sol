@@ -6,6 +6,9 @@ import "../zlib/crowdsale/validation/WhitelistedCrowdsale.sol";
 import "../zlib/crowdsale/validation/CappedCrowdsale.sol";
 import "../zlib/crowdsale/emission/AllowanceCrowdsale.sol";
 import "../zlib/crowdsale/validation/TimedCrowdsale.sol";
+import "../zlib/crowdsale/distribution/PostDeliveryCrowdsale.sol";
+import "../zlib/crowdsale/distribution/FinalizableCrowdsale.sol";
+import "./distribution/PostFinalizableDeliveryCrowdsale.sol";
 import "./distribution/ReleasablePercentage.sol";
 import "./validation/MinimumRequired.sol";
 import "./validation/SetCap.sol";
@@ -14,12 +17,11 @@ import "./payout/PayoutRateFluctuation.sol";
 
 contract PrivateSale is
         AllowanceCrowdsale,
-        CappedCrowdsale,
         WhitelistedCrowdsale,
-        ReleasablePercentage,
         MinimumRequired,
         BonusRateCrowdsale,
         PayoutRateFluctuation,
+        ReleasablePercentage,
         SetCap
 {
     //constructor

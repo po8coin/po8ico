@@ -190,8 +190,16 @@ contract('PrivateSale', function(accounts) {
         assert.equal(startingBalance.toString(), '0', 'balance is incorrect');
     });
 
+
+    it("set percentage to withdraw to 20", async()=>{
+        let percentageTx = await privateSaleInstance.setAllowedPercent(20, {
+            from: accounts[0],
+            gas: 500000000
+        });
+    });
+
     var resultWthdraw;
-    it("can withdraw tokens after sale is done", (done)=>{
+    it("can withdraw 20% tokens after sale is done and finalized", (done)=>{
         var callbackWithdraw = async()=>{
 
             console.log('finalize private sale');
@@ -203,11 +211,12 @@ contract('PrivateSale', function(accounts) {
                 gas: 500000000
             });
             let balance = await po8Instance.balanceOf(accounts[1]);
-            assert.equal(balance, (ether(2).toNumber() * rate.toNumber()) + (ether(2).toNumber() * 8), "balance is incorrect");
+            let shouldbe = (((ether(2).toNumber() * rate.toNumber()) + (ether(2).toNumber() * 8)) / 100) * 20;
+            assert.equal(balance.toNumber(), shouldbe, "balance is incorrect");
             done();
         };
 
-        setTimeout(callbackWithdraw, 50000);
+        setTimeout(callbackWithdraw, 30000);
 
     }).timeout(timeoutMs + 50000);
 
