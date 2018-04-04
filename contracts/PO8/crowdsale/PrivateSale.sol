@@ -8,6 +8,7 @@ import "../zlib/crowdsale/emission/AllowanceCrowdsale.sol";
 import "../zlib/crowdsale/validation/TimedCrowdsale.sol";
 import "./distribution/PostFinalizableDeliveryCrowdsale.sol";
 import "./validation/MinimumRequired.sol";
+import "./validation/SetCap.sol";
 import "./bonuses/BonusRateCrowdsale.sol";
 import "./payout/PayoutRateFluctuation.sol";
 
@@ -18,7 +19,8 @@ contract PrivateSale is
         PostFinalizableDeliveryCrowdsale,
         MinimumRequired,
         BonusRateCrowdsale,
-        PayoutRateFluctuation
+        PayoutRateFluctuation,
+        SetCap
 {
     //constructor
     function PrivateSale(

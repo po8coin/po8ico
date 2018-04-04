@@ -150,6 +150,40 @@ contract('PrivateSale', function(accounts) {
         );
     });
 
+    it("update cap amount", async () =>{
+        await  privateSaleInstance.setCapAmount(ether(1), {
+            from: accounts[0],
+            gas: 500000000
+        });
+    });
+
+    it("cannot buy more than the cap",  async()=>{
+        let error = false;
+        try {
+            resultPurchase = await privateSaleInstance.buyTokens
+            (
+                accounts[1],
+                {
+                    from: accounts[1],
+                    value: ether(2),
+                    gas: 500000000
+                }
+            );
+            error = true;
+        } catch (e) {
+            error = false;
+        }
+
+        if(error) {
+            assert.equal(true, false, 'ERROR: user was able to purchase');
+        } else {
+            assert.equal(true, true, 'you should never read this.');
+        }
+
+    }).timeout(timeoutMs + 50000);
+
+
+
     var startingBalance;
     it("user balance is 0", async()=>{
         startingBalance = await po8Instance.balanceOf(accounts[1]);
