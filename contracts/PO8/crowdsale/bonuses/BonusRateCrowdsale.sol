@@ -5,7 +5,7 @@ import '../../zlib/ownership/Ownable.sol';
 
 contract BonusRateCrowdsale is Crowdsale, Ownable
 {
-    uint256 bonus_rate = 0;
+    uint256 public bonus_rate = 0;
 
     function BonusRateCrowdsale(uint256 _bonus_rate)
     {

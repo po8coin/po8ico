@@ -6,7 +6,7 @@ import "../zlib/crowdsale/validation/WhitelistedCrowdsale.sol";
 import "../zlib/crowdsale/validation/CappedCrowdsale.sol";
 import "../zlib/crowdsale/emission/AllowanceCrowdsale.sol";
 import "../zlib/crowdsale/validation/TimedCrowdsale.sol";
-import "./distribution/PostFinalizableDeliveryCrowdsale.sol";
+import "./distribution/ReleasablePercentage.sol";
 import "./validation/MinimumRequired.sol";
 import "./validation/SetCap.sol";
 import "./bonuses/BonusRateCrowdsale.sol";
@@ -16,7 +16,7 @@ contract PrivateSale is
         AllowanceCrowdsale,
         CappedCrowdsale,
         WhitelistedCrowdsale,
-        PostFinalizableDeliveryCrowdsale,
+        ReleasablePercentage,
         MinimumRequired,
         BonusRateCrowdsale,
         PayoutRateFluctuation,
