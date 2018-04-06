@@ -5,7 +5,7 @@ import '../../zlib/ownership/Ownable.sol';
 
 contract BonusRateCrowdsale is Crowdsale, Ownable
 {
-    uint256 public bonus_rate = 0;
+    uint256 public bonus_rate = 1;
 
     function BonusRateCrowdsale(uint256 _bonus_rate)
     {
@@ -13,6 +13,8 @@ contract BonusRateCrowdsale is Crowdsale, Ownable
     }
 
     function setBonusRate(uint256 _rate)  external onlyOwner {
+        require(_rate >= 1);
+        require(_rate <= 100);
         bonus_rate = _rate;
     }
 
@@ -23,7 +25,7 @@ contract BonusRateCrowdsale is Crowdsale, Ownable
    */
     function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
         uint256 normalAmount = _weiAmount * rate;
-        uint256 bonusAmount = normalAmount * bonus_rate;
+        uint256 bonusAmount = (normalAmount / 100) * bonus_rate;
         return normalAmount + bonusAmount;
     }
 }

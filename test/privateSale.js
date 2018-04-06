@@ -22,7 +22,7 @@ contract('PrivateSale', function(accounts) {
     let close = open + (duration.seconds(30));
     let cap = ether(300);
     let rate = new web3.BigNumber(5);
-    let bonusRate = new web3.BigNumber(0.5);
+    let bonusRate = new web3.BigNumber(50);
     let minWei = ether(1);
     let wallet = accounts[0];
 
@@ -97,13 +97,16 @@ contract('PrivateSale', function(accounts) {
          setTimeout(callbackPurchase, timeoutMs);
         //assert.equal(true, false, 'failing on purpose');
     }).timeout(timeoutMs + 50000);
+    var normalAmount = ether(2).toNumber() * rate.toNumber();
+    var bonusAmount = (normalAmount / 100) * bonusRate.toNumber();
+    var totalWithBonus = normalAmount + bonusAmount;
 
     it("event purchase 1 correct amount", () =>{
         assert.web3Event( resultPurchase,
             {
                 event:'TokenPurchase',
                 "args": {
-                    "amount": ether(2).toNumber() * rate.toNumber(),
+                    "amount": totalWithBonus,
                     "beneficiary": accounts[1],
                     "purchaser": accounts[1],
                     "value": ether(2).toNumber()
@@ -136,12 +139,16 @@ contract('PrivateSale', function(accounts) {
         setTimeout(callbackPurchase, timeoutMs);
     }).timeout(timeoutMs + 50000);
 
+
     it("event purchase 2 correct amount", () =>{
+        normalAmount = ether(2).toNumber() * 8;
+        bonusAmount = (normalAmount / 100) * bonusRate.toNumber();
+        totalWithBonus = normalAmount + bonusAmount;
         assert.web3Event( resultPurchase,
             {
                 event:'TokenPurchase',
                 "args": {
-                    "amount": ether(2).toNumber() * 8,
+                    "amount": totalWithBonus,
                     "beneficiary": accounts[1],
                     "purchaser": accounts[1],
                     "value": ether(2).toNumber()
@@ -202,7 +209,9 @@ contract('PrivateSale', function(accounts) {
     });
 
     var resultWthdraw;
-    var shouldbe1Percent = ((ether(2).toNumber() * rate.toNumber()) + (ether(2).toNumber() * 8)) / 100;
+    var totalAmount = (ether(2).toNumber() * rate.toNumber()) + (ether(2).toNumber() * 8);
+    var totalBonus = (totalAmount / 100) * bonusRate.toNumber();
+    var shouldbe1Percent = (totalAmount + totalBonus) / 100;
     it("can withdraw 20% tokens after sale is done and finalized", (done)=>{
         var callbackWithdraw = async()=>{
 
