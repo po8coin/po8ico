@@ -21,7 +21,7 @@ contract('PrivateSale', function(accounts) {
     let open = latestTime() + timeout;
     let close = open + (duration.seconds(30));
     let cap = ether(300);
-    let rate = new web3.BigNumber(5);
+    let rate = new web3.BigNumber(2);
     let bonusRate = new web3.BigNumber(50);
     let minWei = ether(1);
     let wallet = accounts[0];
@@ -243,9 +243,9 @@ contract('PrivateSale', function(accounts) {
         );
     });
 
-    it("can withdraw another 20%", async()=>{
-        resultWthdraw = await privateSaleInstance.withdrawTokens({
-            from: accounts[1],
+    it("can withdraw another 20% using withdrawTokensTo triggered from owner account", async()=>{
+        resultWthdraw = await privateSaleInstance.withdrawTokensTo(accounts[1],{
+            from: accounts[0],
             gas: 500000000
         });
         let balance = await po8Instance.balanceOf(accounts[1]);

@@ -52,4 +52,26 @@ contract ReleasablePercentage is Ownable, PostDeliveryCrowdsale, FinalizableCrow
         balances[msg.sender] = balanceLeft - allowedAmount;
         _deliverTokens(msg.sender, allowedAmount);
     }
+
+    /**
+    *@dev Process payout to x from owner account
+    */
+    function withdrawTokensTo(address beneficiary)  external onlyOwner {
+        require(hasClosed());
+        require(isFinalized);
+
+        uint256 balanceLeft = balances[beneficiary];
+        uint256 withdrawn = withdrawnBalance[beneficiary];
+        uint256 totalTokens = balanceLeft + withdrawn;
+        uint256 totalAllowance = (totalTokens / 100) * allowedPercent;
+        uint256 allowedAmount = totalAllowance - withdrawn;
+
+        require(balanceLeft > 0);
+        require(allowedAmount > 0);
+        require(allowedAmount <= balanceLeft);
+        withdrawnBalance[beneficiary] = allowedAmount + withdrawn;
+        balances[beneficiary] = balanceLeft - allowedAmount;
+        _deliverTokens(beneficiary, allowedAmount);
+    }
+
 }
