@@ -1,0 +1,15 @@
+{
+  "name": "po8tools",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Rolf Bansbach",
+  "license": "MIT",
+  "dependencies": {
+    "args-parser": "^1.1.0",
+    "prettier": "^1.12.1",
+    "truffle-hdwallet-provider": "0.0.5",
+    "truffle-hdwallet-provider-privkey": "^0.2.0",
+    "typescript": "^2.8.3",
+    "web3": "^0.20.6"
+  }
+}
