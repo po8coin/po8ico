@@ -3,6 +3,11 @@ require('babel-register')({
 });
 require('babel-polyfill');
 
+var HDWalletProvider = require("truffle-hdwallet-provider");
+var mnemonic = require('./metamask.mnemonic');
+
+
+
 module.exports = {
 
     networks: {
@@ -20,7 +25,17 @@ module.exports = {
             network_id: "*"
         },
 
+        ropsten:{
+            provider: function() {
+              return new HDWalletProvider(mnemonic.code,"https://ropsten.infura.io/" + mnemonic.infurakey);
+            },
+            network_id: 3,
+            gas: 500000
+
+        }
+
         /*other*/
+
     }
 
 };

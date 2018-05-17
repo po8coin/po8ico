@@ -5,3 +5,4 @@ package-lock.json
 yarn.lock
 migrations/config/config.json
 migrations/meta/meta.json
+metamask.menmonic.json
