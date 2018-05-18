@@ -7,7 +7,7 @@ var args = require("./myargs").args;
  */
 
 //web3 and config
-var web3 = w.web3(2);//connect as secondary
+var web3 = w.web3(1);//connect as secondary
 var config = w.config;
 //utils
 var BN = web3.BigNumber;
@@ -42,11 +42,11 @@ statusEvent.watch(function(error, result) {
     }
 });*/
 privateSale.buyTokens(
-    config.wallets[2].address,
+    config.wallets[1].address,
     {
-        from: config.wallets[2].address,
-        value: "50000000000000000000",
-        gas: 500000000
+        from: config.wallets[1].address,
+        value: "1000000000000000000", //000000000000000000
+        gas: 5000000
     },
     function(err, res) {
         if (err) {

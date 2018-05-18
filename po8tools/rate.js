@@ -3,7 +3,7 @@ var psAbi = require("./PrivateSale").abi;
 var args = require("./myargs").args;
 
 /**
- * Add address to whitelist
+ * update rate eth x token
  */
 
 //web3 and config
@@ -26,10 +26,10 @@ var privateSale = privateSaleContract.at(sale.address);
 
 
 //add address to whitelist
-if(args.whitelist && web3.isAddress(args.whitelist)) {
-    var address = args.whitelist;
-    console.log("Adding address: " + address + " to whitelisted investors.");
-    privateSale.addToWhitelist(address, config.tx_options, function(err, res) {
+var rate = args.rate;
+if(args.rate && parseInt(args.rate) > 0) {
+    console.log("updating rate to = " + rate);
+    privateSale.setPayoutRate(rate, config.tx_options, function(err, res) {
         if(err) {
             console.log(err);
             process.exit(5);
@@ -40,6 +40,6 @@ if(args.whitelist && web3.isAddress(args.whitelist)) {
     } );
 
 } else {
-    console.log("Whitelist address is invalid.");
+    console.log("rate is invalid rate = " + rate);
     process.exit(2);
 }

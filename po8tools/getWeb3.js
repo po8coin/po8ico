@@ -3,7 +3,7 @@ var HDwalletPrivateKeyProvider = require("truffle-hdwallet-provider-privkey");
 var args = require("./myargs").args;
 var config = require("./config");
 
-var validNetworks = ['local', 'ropsten', 'mainnet'];
+var validNetworks = ['local', 'ropsten', 'mainnet', "rinkeby", "rinkeby_original"];
 if(validNetworks.indexOf(args.network) < 0) {
     console.log("network option invalid");
     process.exit(1);
@@ -13,7 +13,7 @@ var web3 = [];
 var configme;
 
 
-var networks = ["local", "ropsten", "mainnet"];
+var networks = ["local", "ropsten", "mainnet", "rinkeby", "rinkeby_original"];
 if(networks.indexOf(args.network) < 0) {
     console.log("Invalid Network: " + args.network);
     process.exit(2);

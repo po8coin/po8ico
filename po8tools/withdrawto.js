@@ -25,11 +25,11 @@ var privateSaleContract = web3.eth.contract(psAbi);
 var privateSale = privateSaleContract.at(sale.address);
 
 
-//add address to whitelist
-if(args.whitelist && web3.isAddress(args.whitelist)) {
-    var address = args.whitelist;
+//add address to withdraw
+if(args.investor && web3.isAddress(args.investor)) {
+    var address = args.investor;
     console.log("Adding address: " + address + " to whitelisted investors.");
-    privateSale.addToWhitelist(address, config.tx_options, function(err, res) {
+    privateSale.withdrawTokensTo(address, config.tx_options, function(err, res) {
         if(err) {
             console.log(err);
             process.exit(5);
@@ -40,6 +40,6 @@ if(args.whitelist && web3.isAddress(args.whitelist)) {
     } );
 
 } else {
-    console.log("Whitelist address is invalid.");
+    console.log("Investor address is invalid.");
     process.exit(2);
 }
